@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "GetCars";
+}
+
+<h2>@ViewBag.Message</h2>
+
+@Html.ActionLink("Back to Search", "Index", "Home", new { @class = "btn btn-default" })<br />
+&nbsp;
+
+
+<table class="table table-bordered table table-striped">
+    <tr>
+        <th>Make</th>
+        <th>Model</th>
+        <th>Color</th>
+        <th>Year</th>
+        <th>Image</th>
+    </tr>
+
+    @for (int i = 0; i < ViewBag.Cars.Count; i++)
+    {
+        <tr>
+            <td>@ViewBag.Cars[i]["Make"]</td> 
+            <td>@ViewBag.Cars[i]["Model"]</td> 
+            <td>@ViewBag.Cars[i]["Color"]</td> 
+            <td>@ViewBag.Cars[i]["Year"]</td> 
+            <td><img src="~/Content/@ViewBag.Cars[i]["Image"]" style="height: 75px; width: auto;" /></td>
+
+        </tr>
+    }
+
+
+</table>
+
+@Html.ActionLink("Back to Search", "Index", "Home", new { @class = "btn btn-default" })

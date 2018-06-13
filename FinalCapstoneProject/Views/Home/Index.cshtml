@@ -1,0 +1,26 @@
+﻿<br />@Html.ActionLink("Show all Cars", "GetCars", "Home", new { @class = "btn btn-danger" })<br/><br />
+
+<b>Search Cars by Make</b><form action="~/Home/GetCarsByMake">
+    <input type="text" name="make" placeholder="Make"/> | 
+    <input type="submit" value="Search By Make" class="btn btn-primary"/>
+
+</form><br />
+
+
+<b>Search Cars by Model</b><form action="~/Home/GetCarsByModel">
+    <input type="text" name="model" placeholder="Model"/> |
+    <input type="submit" value="Search By Model" class="btn btn-primary" />
+
+</form><br />
+
+<b>Search Cars by Year</b><form action="~/Home/GetCarsByYear">
+    <input type="text" name="year" placeholder="Year" /> |
+    <input type="submit" value="Search By Year" class="btn btn-primary" />
+
+</form><br />
+
+<b>Search Cars by Color</b><form action="~/Home/GetCarsByColor">
+    <input type="text" name="color" placeholder="Color" /> |
+    <input type="submit" value="Search By Color" class="btn btn-primary" />
+
+</form>
