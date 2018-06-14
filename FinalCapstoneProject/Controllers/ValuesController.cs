@@ -52,7 +52,29 @@ namespace FinalCapstoneProject.Controllers
             return cars;
         }
 
-        
+        public List<Car> GetCarsSearch (string make = "", string model = "", int? year = 0, string color = "")
+        {           
+            List<Car> cars = db.Cars.ToList();
+          
+
+            if (make != null && make != "")
+            {
+                cars = cars.Where(c => c.Make.ToLower() == make.ToLower()).ToList();
+            }
+            if (model != null && model != "")
+            {
+                cars = cars.Where(c => c.Model.ToLower() == model.ToLower()).ToList(); 
+            }
+            if (year.ToString() != null && year.ToString() != "")
+            {
+                cars = cars.Where(c => c.Year.Equals(year)).ToList();
+            }
+            if (!string.IsNullOrEmpty(color))
+            {
+                cars = cars.Where(c => c.Color.ToLower() == color.ToLower()).ToList();
+            }
+            return cars;
+        }
 
     }
 }

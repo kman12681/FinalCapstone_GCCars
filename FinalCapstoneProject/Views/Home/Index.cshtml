@@ -1,26 +1,86 @@
-﻿<br />@Html.ActionLink("Show all Cars", "GetCars", "Home", new { @class = "btn btn-danger" })<br/><br />
+﻿<br />@Html.ActionLink("Show all Cars", "GetCars", "Home", new { @class = "btn btn-danger" })<br /><br />
 
-<b>Search Cars by Make</b><form action="~/Home/GetCarsByMake">
-    <input type="text" name="make" placeholder="Make"/> | 
-    <input type="submit" value="Search By Make" class="btn btn-primary"/>
+<b>Search Cars</b>
+<form action="~/Home/GetCarsSearch">
+    <input type="text" name="make" placeholder="Make" />
+    <input type="text" name="model" placeholder="Model" />
+    <input type="text" name="year" placeholder="Year" />
+    <input type="text" name="color" placeholder="Color" />
+    <input type="submit" value="Search" class="btn btn-primary" />
 
 </form><br />
 
 
-<b>Search Cars by Model</b><form action="~/Home/GetCarsByModel">
-    <input type="text" name="model" placeholder="Model"/> |
+@*<b>Search Cars by Model</b>
+<form action="~/Home/GetCarsSearch">
+    <input type="text" name="model" placeholder="Model" /> |
     <input type="submit" value="Search By Model" class="btn btn-primary" />
 
 </form><br />
 
-<b>Search Cars by Year</b><form action="~/Home/GetCarsByYear">
+<b>Search Cars by Year</b>
+<form action="~/Home/GetCarsSearch">
     <input type="text" name="year" placeholder="Year" /> |
     <input type="submit" value="Search By Year" class="btn btn-primary" />
 
 </form><br />
 
-<b>Search Cars by Color</b><form action="~/Home/GetCarsByColor">
+<b>Search Cars by Color</b>
+<form action="~/Home/GetCarsSearch">
     <input type="text" name="color" placeholder="Color" /> |
-    <input type="submit" value="Search By Color" class="btn btn-primary" />
+    <input type="submit" value="Search By Color" class="btn btn-primary" />*@
 
 </form>
+
+@*<input type="text" id="make" class="form-control"
+       oninput="search()" />
+<!-- input type="button" id="search" value="Search by City"
+        class="btn btn-default" onclick="search()" /-->
+
+<table class="table table-striped" id="cars">
+    <!-- this is the inner HTML for #customers -->
+</table>
+
+<script type="text/javascript"
+        src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    function search() {
+        $.ajax(
+            {
+                type: 'GET',
+                url: '/Home/GetCarsByMake?make=',
+                //data: '{title: "' + document.getElementById("make").value
+                //    + '"}',
+                contentType: 'application/json; charset-utf-8',
+                dataType: 'json',
+                success:
+                    function (response) {
+                        var tableHTML = "<tr><th>Make</th>"
+                            + "<th>Model</th>"
+                            + "<th>Color</th>"
+                            + "<th>Year</th>"
+                            //+ "<th>Image</th></tr>";
+                        for (var i = 0; i < response.length; i++) {
+                            var Car = response[i];
+                            var tr = "<tr><td>" + Car.Make + "</td>"
+                                + "<td>" + Car.Model + "</td>"
+                                + "<td>" + Car.Color + "</td>"
+                                + "<td>" + Car.Year + "</td>"
+                                //+ "<td>" + Car.Image + "</td>"
+                                + "</tr>";
+                            tableHTML += tr;
+                        }
+                        document.getElementById("cars")
+                            .innerHTML = tableHTML;
+                    },
+                failure: function (response) {
+                    alert("Failure" + response.responseText);
+                },
+                error: function (response) {
+                    alert("Error" + response.responseText);
+                }
+            }
+
+        );
+    }
+</script>*@
