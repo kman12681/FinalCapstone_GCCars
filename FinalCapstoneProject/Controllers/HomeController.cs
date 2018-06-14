@@ -22,6 +22,8 @@ namespace FinalCapstoneProject.Controllers
 
         public ActionResult GetCars()
         {
+            // Takes no parameters, shows all cars
+
             HttpWebRequest WR = WebRequest.CreateHttp("http://localhost:59832/api/Values/GetCars");
             WR.UserAgent = ".NET Framework Test Client";
 
@@ -66,9 +68,75 @@ namespace FinalCapstoneProject.Controllers
         }
 
         
+        
+
+            // This action returns all search fields, so below actions are commented out
+
+        public ActionResult GetCarsSearch(string make, string model, int? year, string color)
+        {
+            //api call to get list of cars with matching parameters
+
+            HttpWebRequest WR = WebRequest.CreateHttp($"http://localhost:59832/api/Values/GetCarsSearch?make={make}&model={model}&year={year}&color={color}");
+            WR.UserAgent = ".NET Framework Test Client";
+
+            HttpWebResponse Response;
+
+            try
+            {
+                Response = (HttpWebResponse)WR.GetResponse();
+            }
+            catch (WebException e)
+            {
+                ViewBag.Error = "Exception";
+                ViewBag.ErrorDescription = e.Message;
+                return View("GetCars");
+            }
+
+            if (Response.StatusCode != HttpStatusCode.OK)
+            {
+                ViewBag.Error = Response.StatusCode;
+                ViewBag.ErrorDescription = Response.StatusDescription;
+                return View("GetCars");
+            }
+
+            StreamReader reader = new StreamReader(Response.GetResponseStream());
+            string CarData = reader.ReadToEnd();
+
+            try
+            {
+                // if no cars match parameters, JSON data returns empty
+                // route to error View
+
+                if (CarData == "[]")
+                {
+                    ViewBag.Message = "Car does not exist in the database.";
+                    return View("Error");
+                }
+                else
+                {
+                    // cars that match parameters return as JSON data
+                    // placed into jArray
+
+                    JArray JsonData = JArray.Parse(CarData);
+
+                    ViewBag.Cars = JsonData;
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                ViewBag.Error = "JSON Issue";
+                ViewBag.ErrorDescription = e.Message;
+                return View("GetCars");
+            }
+
+
+            return View("GetCars");
+        }
         //public ActionResult GetCarsByMake(string make)
         //{
-            
+
 
         //        HttpWebRequest WR = WebRequest.CreateHttp($"http://localhost:59832/api/Values/GetCarsByMake?make={make}");
         //        WR.UserAgent = ".NET Framework Test Client";
@@ -298,66 +366,6 @@ namespace FinalCapstoneProject.Controllers
 
         //    return View("GetCars");
         //}
-
-            // This action returns all search fields, so above actions are commented out
-
-        public ActionResult GetCarsSearch(string make, string model, int? year, string color)
-        {
-
-
-            HttpWebRequest WR = WebRequest.CreateHttp($"http://localhost:59832/api/Values/GetCarsSearch?make={make}&model={model}&year={year}&color={color}");
-            WR.UserAgent = ".NET Framework Test Client";
-
-            HttpWebResponse Response;
-
-            try
-            {
-                Response = (HttpWebResponse)WR.GetResponse();
-            }
-            catch (WebException e)
-            {
-                ViewBag.Error = "Exception";
-                ViewBag.ErrorDescription = e.Message;
-                return View("GetCars");
-            }
-
-            if (Response.StatusCode != HttpStatusCode.OK)
-            {
-                ViewBag.Error = Response.StatusCode;
-                ViewBag.ErrorDescription = Response.StatusDescription;
-                return View("GetCars");
-            }
-
-            StreamReader reader = new StreamReader(Response.GetResponseStream());
-            string CarData = reader.ReadToEnd();
-
-            try
-            {
-
-                if (CarData == "[]")
-                {
-                    ViewBag.Message = "Car does not exist in the database.";
-                    return View("Error");
-                }
-                else
-                {
-                    JArray JsonData = JArray.Parse(CarData);
-
-                    ViewBag.Cars = JsonData;
-
-                }
-
-            }
-            catch (Exception e)
-            {
-                ViewBag.Error = "JSON Issue";
-                ViewBag.ErrorDescription = e.Message;
-                return View("GetCars");
-            }
-
-
-            return View("GetCars");
-        }
 
 
     }

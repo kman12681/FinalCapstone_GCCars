@@ -13,6 +13,7 @@ namespace FinalCapstoneProject.Controllers
 
         CarsEntities db = new CarsEntities();
 
+        [HttpGet]
         public List<Car> GetCars()
         {
             List<Car> cars = db.Cars.ToList();
@@ -20,6 +21,7 @@ namespace FinalCapstoneProject.Controllers
             return cars;
         }
 
+        [HttpGet]
         public List<Car> GetCarsByMake(string make)
         {
             List<Car> cars = (from c in db.Cars
@@ -28,6 +30,7 @@ namespace FinalCapstoneProject.Controllers
             return cars;
         }
 
+        [HttpGet]
         public List<Car> GetCarsByModel(string model)
         {
             List<Car> cars = (from c in db.Cars
@@ -36,6 +39,7 @@ namespace FinalCapstoneProject.Controllers
             return cars;
         }
 
+        [HttpGet]
         public List<Car> GetCarsByYear(int? year)
         {
             List<Car> cars = (from c in db.Cars
@@ -44,6 +48,7 @@ namespace FinalCapstoneProject.Controllers
             return cars;
         }
 
+        [HttpGet]
         public List<Car> GetCarsByColor(string color)
         {
             List<Car> cars = (from c in db.Cars
@@ -52,10 +57,10 @@ namespace FinalCapstoneProject.Controllers
             return cars;
         }
 
+        [HttpGet]
         public List<Car> GetCarsSearch (string make = "", string model = "", int? year = 0, string color = "")
         {           
-            List<Car> cars = db.Cars.ToList();
-          
+            List<Car> cars = db.Cars.ToList();          
 
             if (make != null && make != "")
             {
